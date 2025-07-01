@@ -1,0 +1,422 @@
+/**
+ * Estilos Personalizados para la Tienda Online
+ * 
+ * Este archivo contiene todos los estilos CSS personalizados para mejorar
+ * la apariencia de nuestra tienda online. Se complementa con Bootstrap
+ * para crear una experiencia visual moderna y atractiva.
+ * 
+ * @author Sistema de Tienda Online
+ * @version 1.0
+ */
+
+/* Variables CSS para colores y espaciados consistentes */
+:root {
+    --color-primario: #0d6efd;
+    --color-secundario: #6c757d;
+    --color-exito: #198754;
+    --color-peligro: #dc3545;
+    --color-advertencia: #ffc107;
+    --color-info: #0dcaf0;
+    --color-fondo: #f8f9fa;
+    --sombra-suave: 0 2px 4px rgba(0,0,0,0.1);
+    --sombra-media: 0 4px 8px rgba(0,0,0,0.15);
+    --radio-borde: 8px;
+    --transicion-suave: all 0.3s ease;
+}
+
+/* Estilos generales del body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+/* Mejoras en la navegación */
+.navbar {
+    box-shadow: var(--sombra-suave);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+    transition: var(--transicion-suave);
+}
+
+.navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+/* Estilos para las tarjetas de productos */
+.producto-card {
+    transition: var(--transicion-suave);
+    border: none;
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+    background: white;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-media);
+}
+
+.producto-card .card-img-top {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: var(--transicion-suave);
+}
+
+.producto-card:hover .card-img-top {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+}
+
+.producto-card .card-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-primario);
+}
+
+.producto-card .btn-agregar-carrito {
+    background: linear-gradient(135deg, var(--color-primario) 0%, #0b5ed7 100%);
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: var(--transicion-suave);
+    box-shadow: var(--sombra-suave);
+}
+
+.producto-card .btn-agregar-carrito:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-media);
+    background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+}
+
+/* Estilos para el carrito de compras */
+.btn-carrito {
+    position: relative;
+    transition: var(--transicion-suave);
+}
+
+.btn-carrito:hover {
+    transform: translateY(-2px);
+}
+
+/* Animación para el contador del carrito */
+.pulse {
+    animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Estilos para los elementos del carrito */
+.item-carrito {
+    transition: var(--transicion-suave);
+    border-radius: var(--radio-borde);
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+}
+
+.item-carrito:hover {
+    background-color: #f8f9fa;
+}
+
+.item-carrito .btn {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transicion-suave);
+}
+
+.item-carrito .btn:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos para los modales */
+.modal-content {
+    border: none;
+    border-radius: var(--radio-borde);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-radius: var(--radio-borde) var(--radio-borde) 0 0;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-radius: 0 0 var(--radio-borde) var(--radio-borde);
+}
+
+/* Estilos para el formulario de compra */
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 2px solid #e9ecef;
+    transition: var(--transicion-suave);
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    transform: translateY(-1px);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos para las alertas y mensajes */
+.alert {
+    border: none;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-suave);
+    border-left: 4px solid;
+}
+
+.alert-success { border-left-color: var(--color-exito); }
+.alert-danger { border-left-color: var(--color-peligro); }
+.alert-warning { border-left-color: var(--color-advertencia); }
+.alert-info { border-left-color: var(--color-info); }
+
+/* Estilos para los toasts de notificación */
+.toast {
+    border: none;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--sombra-media);
+    backdrop-filter: blur(10px);
+}
+
+.toast-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.toast-body {
+    background: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+}
+
+/* Estilos para botones mejorados */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: var(--transicion-suave);
+    border: none;
+    box-shadow: var(--sombra-suave);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-media);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primario) 0%, #0b5ed7 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--color-exito) 0%, #157347 100%);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--color-peligro) 0%, #b02a37 100%);
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Estilos para el indicador de carga */
+.spinner-border {
+    animation: spinner-border 1s linear infinite;
+}
+
+/* Estilos responsivos para dispositivos móviles */
+@media (max-width: 768px) {
+    .producto-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .item-carrito {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .item-carrito .flex-shrink-0:last-child {
+        margin-top: 1rem;
+        align-self: center;
+    }
+}
+
+/* Estilos para mejorar la accesibilidad */
+.btn:focus,
+.form-control:focus,
+.form-select:focus {
+    outline: 2px solid var(--color-primario);
+    outline-offset: 2px;
+}
+
+/* Estilos para el estado de carga */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Animación para la aparición de productos */
+.producto-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para resaltar elementos importantes */
+.text-precio {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-exito);
+}
+
+.badge-carrito {
+    font-size: 0.75rem;
+    padding: 0.35em 0.5em;
+}
+
+/* Estilos para mejorar la legibilidad */
+.lead {
+    font-weight: 400;
+    color: #6c757d;
+}
+
+.fw-bold {
+    font-weight: 600 !important;
+}
+
+/* Estilos para las secciones del resumen */
+.resumen-seccion {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: var(--radio-borde);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Estilos para iconos */
+.fas, .far, .fab {
+    transition: var(--transicion-suave);
+}
+
+.btn:hover .fas,
+.btn:hover .far {
+    transform: scale(1.1);
+}
+
+/* Estilos para mejorar el contraste */
+.text-muted {
+    color: #6c757d !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+/* Estilos para elementos interactivos */
+.clickable {
+    cursor: pointer;
+    transition: var(--transicion-suave);
+}
+
+.clickable:hover {
+    opacity: 0.8;
+}
+
+/* Estilos para la validación de formularios */
+.was-validated .form-control:invalid {
+    border-color: var(--color-peligro);
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.was-validated .form-control:valid {
+    border-color: var(--color-exito);
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+/* Estilos para mejorar la experiencia visual */
+.shadow-custom {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+.border-custom {
+    border: 2px solid rgba(0,0,0,0.1) !important;
+}
+
+/* Animación para elementos que aparecen */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Estilos para mejorar la navegación */
+.nav-link {
+    transition: var(--transicion-suave);
+    border-radius: 4px;
+    margin: 0 0.25rem;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Estilos finales para optimización */
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Media queries adicionales para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 2rem;
+    }
+    
+    .producto-card {
+        margin-bottom: 2rem;
+    }
+}
