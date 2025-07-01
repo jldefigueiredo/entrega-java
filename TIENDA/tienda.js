@@ -166,6 +166,9 @@ async function cargarProductos() {
         // Mostrar los productos en la interfaz
         mostrarProductos(productos);
         
+        // Generar rangos de precio dinámicos
+        generarRangosPrecioDinamicos();
+        
     } catch (error) {
         console.error('Error al cargar productos:', error);
         
@@ -525,18 +528,19 @@ function aplicarFiltros() {
         productosFiltrados = productosFiltrados.filter(producto => {
             const precio = producto.precio;
             
-            switch (precioFiltro) {
-                case '0-50':
-                    return precio <= 50;
-                case '50-100':
-                    return precio > 50 && precio <= 100;
-                case '100-200':
-                    return precio > 100 && precio <= 200;
-                case '200+':
-                    return precio > 200;
-                default:
-                    return true;
+            // Manejar rangos dinámicos
+            if (precioFiltro.includes('-')) {
+                const [min, max] = precioFiltro.split('-').map(Number);
+                return precio >= min && precio <= max;
             }
+            
+            // Manejar rango abierto (ej: "500+")
+            if (precioFiltro.includes('+')) {
+                const min = parseFloat(precioFiltro.replace('+', ''));
+                return precio > min;
+            }
+            
+            return true;
         });
     }
     
@@ -757,6 +761,138 @@ function formatearMoneda(cantidad) {
         style: 'currency',
         currency: 'ARS'
     }).format(cantidad);
+}
+
+/**
+ * Genera rangos de precio dinámicos basados en los productos disponibles
+ * Analiza todos los precios y crea rangos inteligentes para el filtro
+ */
+function generarRangosPrecioDinamicos() {
+    const selectPrecio = document.getElementById('filtrarPrecio');
+    
+    if (!selectPrecio || todosLosProductos.length === 0) {
+        return;
+    }
+    
+    // Extraer todos los precios y ordenarlos
+    const precios = todosLosProductos
+        .map(producto => producto.precio)
+        .sort((a, b) => a - b);
+    
+    const precioMinimo = Math.floor(precios[0]);
+    const precioMaximo = Math.ceil(precios[precios.length - 1]);
+    
+    console.log(`📊 Generando rangos dinámicos: $${precioMinimo} - $${precioMaximo}`);
+    
+    // Limpiar opciones existentes excepto la primera
+    selectPrecio.innerHTML = '<option value="">Todos los precios</option>';
+    
+    // Si hay muy pocos productos o poca variación de precios, usar rangos simples
+    if (precios.length <= 3 || (precioMaximo - precioMinimo) <= 100) {
+        generarRangosSimples(selectPrecio, precioMinimo, precioMaximo);
+        return;
+    }
+    
+    // Calcular rangos inteligentes basados en la distribución de precios
+    const rangos = calcularRangosInteligentes(precios, precioMinimo, precioMaximo);
+    
+    // Agregar los rangos al select
+    rangos.forEach(rango => {
+        const option = document.createElement('option');
+        option.value = rango.valor;
+        option.textContent = rango.texto;
+        selectPrecio.appendChild(option);
+    });
+    
+    console.log(`✅ Rangos de precio actualizados: ${rangos.length} rangos creados`);
+}
+
+/**
+ * Genera rangos simples cuando hay pocos productos
+ */
+function generarRangosSimples(selectPrecio, minimo, maximo) {
+    const rangos = [
+        { valor: `0-${Math.floor(maximo/2)}`, texto: `Hasta $${Math.floor(maximo/2)}` },
+        { valor: `${Math.floor(maximo/2)}-${maximo}`, texto: `$${Math.floor(maximo/2)} - $${maximo}` },
+        { valor: `${maximo}+`, texto: `Más de $${maximo}` }
+    ];
+    
+    rangos.forEach(rango => {
+        const option = document.createElement('option');
+        option.value = rango.valor;
+        option.textContent = rango.texto;
+        selectPrecio.appendChild(option);
+    });
+}
+
+/**
+ * Calcula rangos inteligentes basados en la distribución de precios
+ */
+function calcularRangosInteligentes(precios, minimo, maximo) {
+    const rangos = [];
+    
+    // Calcular cuartiles para crear rangos más equilibrados
+    const q1 = calcularCuartil(precios, 0.25);
+    const q2 = calcularCuartil(precios, 0.5); // mediana
+    const q3 = calcularCuartil(precios, 0.75);
+    
+    // Redondear valores para que sean más amigables
+    const q1Redondeado = Math.floor(q1 / 10) * 10;
+    const q2Redondeado = Math.floor(q2 / 10) * 10;
+    const q3Redondeado = Math.floor(q3 / 10) * 10;
+    const maximoRedondeado = Math.ceil(maximo / 10) * 10;
+    
+    // Crear rangos basados en cuartiles
+    if (q1Redondeado > 0) {
+        rangos.push({
+            valor: `0-${q1Redondeado}`,
+            texto: `Hasta $${q1Redondeado}`
+        });
+    }
+    
+    if (q2Redondeado > q1Redondeado) {
+        rangos.push({
+            valor: `${q1Redondeado}-${q2Redondeado}`,
+            texto: `$${q1Redondeado} - $${q2Redondeado}`
+        });
+    }
+    
+    if (q3Redondeado > q2Redondeado) {
+        rangos.push({
+            valor: `${q2Redondeado}-${q3Redondeado}`,
+            texto: `$${q2Redondeado} - $${q3Redondeado}`
+        });
+    }
+    
+    if (maximoRedondeado > q3Redondeado) {
+        rangos.push({
+            valor: `${q3Redondeado}-${maximoRedondeado}`,
+            texto: `$${q3Redondeado} - $${maximoRedondeado}`
+        });
+    }
+    
+    // Agregar rango para productos más caros que el máximo actual
+    rangos.push({
+        valor: `${maximoRedondeado}+`,
+        texto: `Más de $${maximoRedondeado}`
+    });
+    
+    return rangos;
+}
+
+/**
+ * Calcula un cuartil específico de un array de números ordenados
+ */
+function calcularCuartil(arrayOrdenado, cuartil) {
+    const indice = (arrayOrdenado.length - 1) * cuartil;
+    const inferior = Math.floor(indice);
+    const superior = Math.ceil(indice);
+    
+    if (inferior === superior) {
+        return arrayOrdenado[inferior];
+    }
+    
+    return arrayOrdenado[inferior] * (superior - indice) + arrayOrdenado[superior] * (indice - inferior);
 }
 
 

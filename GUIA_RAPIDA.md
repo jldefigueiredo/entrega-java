@@ -74,4 +74,35 @@ Método de pago: Cualquiera de las opciones
 4. **Agrega muchos productos** al carrito para ver el scroll
 5. **Intenta búsquedas complejas** como "ga" (encuentra "Mouse Gaming")
 
+## 🆕 ¡NUEVA FUNCIONALIDAD! - Rangos de Precio Dinámicos
+
+### 📊 **Filtros Inteligentes Automáticos**
+¡Los rangos de precio ahora se generan automáticamente basándose en los productos disponibles!
+
+**¿Cómo funciona?**
+- ✅ **Análisis automático**: El sistema analiza todos los precios al cargar la página
+- ✅ **Rangos equilibrados**: Crea filtros con cantidades similares de productos
+- ✅ **Valores redondeados**: Usa números amigables (múltiplos de 10)
+- ✅ **Actualización automática**: Se ajusta cuando agregas/eliminas productos
+
+**¡Pruébalo!**
+1. Abre la tienda y ve al filtro de precios
+2. Verás rangos como "Hasta $140", "$140 - $390", etc.
+3. Estos rangos se calcularon automáticamente desde los 12 productos disponibles
+4. Cada rango contiene aproximadamente el 25% de los productos
+
+**Productos actuales con gran variedad de precios:**
+- 💸 **Cable USB** - $15.99 (más barato)
+- 🖱️ **Mouse Gamer** - $13.99
+- 🎧 **Auriculares Bluetooth** - $79.99  
+- ⌨️ **Teclado Mecánico RGB** - $129.99
+- 🖥️ **Monitor 4K LG** - $329.99
+- 📱 **Tablet Samsung** - $299.99
+- ⌚ **Smartwatch Apple** - $399.99
+- 📱 **Smartphone Samsung Galaxy** - $699.99
+- 💻 **Laptop Dell Inspiron** - $899.99
+- 🍯 **MacBook Pro** - $2,499.99
+- 🧀 **Queso untable** - $2,322.30
+- ☕ **Café en granos x 1kg** - $45,000.00 (¡más caro!)
+
 ¡Disfruta explorando tu nueva tienda online! 🎉
