@@ -3,7 +3,6 @@ package com.ejemplo.articulos.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,7 +57,6 @@ public class ArticuloController {
      * 
      * @param articuloService El servicio de artículos
      */
-    @Autowired
     public ArticuloController(ArticuloService articuloService) {
         this.articuloService = articuloService;
     }
